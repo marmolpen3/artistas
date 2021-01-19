@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from recomendador import views as recomendador_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', recomendador_views.index),
+    path('populate/', recomendador_views.popularBD, name="populateDB")
 ]
