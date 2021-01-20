@@ -20,5 +20,7 @@ from recomendador import views as recomendador_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', recomendador_views.index),
-    path('populate/', recomendador_views.popularBD, name="populateDB")
+    path('populate/', recomendador_views.popularBD, name="populateDB"),
+    path('populateDict/', recomendador_views.popularDic, name="populateDict"),
+    path('infoUser/', recomendador_views.infoUsuario, name="infoUsuario")
 ]
