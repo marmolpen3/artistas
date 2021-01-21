@@ -30,7 +30,7 @@ def loadDict():
 
         PrefsUsuarios.setdefault(usuario_id, {})
         PrefsUsuarios[usuario_id][artista_id] = tiempo_escuchado
-
+    print(PrefsUsuarios)
     # PrefsUsuarios = {'usuarioId0': {'artistaId0':tiempo_escuchado, 'artistaId1':tiempo_escuchado},
     #                  'usuarioId0': {'artistaId0':tiempo_escuchado, 'artistaId1':tiempo_escuchado},...}
 
@@ -42,17 +42,19 @@ def infoUsuario(request):
         form=FormularioUsuario(request.GET)
         if form.is_valid():
             usuario_id = form.cleaned_data['usuario_id']
+            print(usuario_id)
             shelf = shelve.open("dataRS.dat")
             prefs_usuarios = shelf['PreferenciasUsuarios']
             shelf.close()
             artistas = prefs_usuarios[usuario_id]
             artistas_escuchados = []
-            for a in artistas:
-                artista = Artista.objects.get(id=int(a[0]))
-                tiempo_escuchado = int(a[1])
+            for a_id, seg in artistas.items():
+                artista = Artista.objects.get(pk=a_id)
+                tiempo_escuchado = seg
                 artistas_escuchados.append((artista, tiempo_escuchado))
 
             return render(request, 'info_usuario.html', {'artistas_escuchados':artistas_escuchados})
 
     form=FormularioUsuario()
     return render(request, 'formulario_artistas_usuario.html', {'form':form})
+

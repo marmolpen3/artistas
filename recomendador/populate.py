@@ -1,3 +1,5 @@
+import pandas
+import csv
 from .models import Artista, Etiqueta, UsuarioArtista, UsuarioEtiquetaArtista
 
 def vaciar_tablas():
@@ -95,10 +97,24 @@ def cargar_usuarios_etiquetas_artistas(artistas, etiquetas):
     print("Usuarios-Etiquetas-Artistas insertados: " + str(UsuarioEtiquetaArtista.objects.count()))
     print("---------------------------------------------------------")
 
+
+def usuario_csv():
+    myfile = open('./datos/usuarios.csv')
+    data = pandas.read_csv(myfile, encoding='utf-8', delimiter='\t')
+    print(data.values)
+
+def usuario2_csv():
+    with open('./datos/usuarios.csv', newline='') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter='\t')
+        for row in spamreader:
+            print(', '.join(row))
+
 def populateDatabase():
-    vaciar_tablas()
-    artistas = cargar_artistas()
-    etiquetas = cargar_etiquetas()
-    cargar_usuarios_artistas()
-    cargar_usuarios_etiquetas_artistas(artistas, etiquetas)
+    usuario_csv()
+    usuario2_csv()
+    # vaciar_tablas()
+    # artistas = cargar_artistas()
+    # etiquetas = cargar_etiquetas()
+    # cargar_usuarios_artistas()
+    # cargar_usuarios_etiquetas_artistas(artistas, etiquetas)
     print("Finished database population")
